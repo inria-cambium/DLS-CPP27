@@ -30,9 +30,6 @@ Section Defs.
   Definition union (A: K -> smallsubset): smallsubset :=
   (fun k => let (k1, k2) := retr_s z k in A k1 k2).
 
-  Definition rightmono {J} (R: J -> smallsubset -> Prop) :=
-  forall j B C, R j B -> included B C -> R j C.
-
 End Defs.
 Arguments smallsubset X K: clear implicits.
 
@@ -86,6 +83,15 @@ Section Lemmas.
     reflexivity.
   Qed.
 
+End Lemmas.
+#[global] Opaque union.
+#[global] Opaque bunion.
+
+Section RightMonotonicity.
+
+  Definition rightmono {X K J} (R: J -> smallsubset X K -> Prop) :=
+  forall j B C, R j B -> included B C -> R j C.
+
   Lemma included_rightmono {X K}: rightmono (included (X:=X) (K:=K)).
   Proof.
     exact included_trans.
@@ -111,10 +117,7 @@ Section Lemmas.
     - apply (H A2 B2 _ h2), r_included_bunion.
   Qed.
 
-End Lemmas.
-#[global] Opaque union.
-#[global] Opaque bunion.
-
+End RightMonotonicity.
 Section Closure.
 
   Context {s_f: funcs_signature}.
