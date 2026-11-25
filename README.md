@@ -2,6 +2,8 @@
 
 ## Content
 
+The Rocq code is in the [website] folder. Output of coqdoc is available under [website].
+
 Material in the `Core` folder is from the [first-order logic library](https://github.com/uds-psl/coq-library-fol), trimmed to the bare necessity to quicken compilation time.
 
 Our proof is contained in the `DLS` folder.
