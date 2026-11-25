@@ -1,0 +1,21 @@
+-docroot .
+
+-Q . FOL
+
+# Disable warnings about vectors being hard to use. We know how to work with them.
+-arg -w -arg -warn-library-file-stdlib-vector
+
+Core/Syntax.v
+Core/Tarski.v
+Core/Models.v
+
+DLS/Defs.v
+DLS/LogicalPrinciples.v
+DLS/Retracts.v
+DLS/Utils.v
+DLS/Signatures.v
+DLS/SubsetsDefs.v
+DLS/DLSfw.v
+DLS/DLSalt.v
+DLS/DLSbw.v
+DLS/ReverseAnalysisDLS.v
