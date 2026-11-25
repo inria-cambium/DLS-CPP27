@@ -10,9 +10,7 @@ Section Defs.
   A ≤R B -> interp A -> interp B.
   Proof.
     intros [i s o] [A_func A_atom].
-    pose (B_func := fun f v => i (A_func f (map s v))).
-    pose (B_atom := fun p v => A_atom p (map s v)).
-    apply (B_I B_func B_atom).
+    apply (B_I (fun f v => i (A_func f (map s v))) (fun p v => A_atom p (map s v))).
   Defined.
 
 End Defs.

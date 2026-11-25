@@ -149,51 +149,6 @@ Section Forward.
 
     Context {M: model} {m0: M}.
 
-    Lemma TV_fixpoint_of_directed_family:
-    (exists F: K -> smallsubset M K, directedR (fun k1 k2 => TV m0 (F k1) (F k2))) ->
-    exists A: smallsubset M K, TV m0 A A.
-    Proof.
-      intros [F HF].
-      assert (Hincl: directedR (fun k1 k2 => included (F k1) (F k2))).
-      {
-        intros k1 k2. destruct (HF k1 k2) as [k0 [[H1 _] [H2 _]]].
-        exists k0.
-        split; assumption.
-      }
-      assert (HTVex: totalR (fun k1 k2 => TVex m0 (F k1) (F k2))).
-      {
-        intros k1. destruct (HF k1 k1) as [k0 [[_ [H1 _]] _]].
-        exists k0.
-        assumption.
-      }
-      assert (HTVall: totalR (fun k1 k2 => TVall m0 (F k1) (F k2))).
-      {
-        intros k1. destruct (HF k1 k1) as [k0 [[_ [_ H1]] _]].
-        exists k0.
-        assumption.
-      }
-      exists (union siK F).
-      repeat split.
-      1: reflexivity.
-      all: intros phi v H.
-      all: destruct (uniform_clos_vec siK Hincl (existT _ _ v)) as [j [v' hvj']].
-      1: destruct (HTVex j) as [j' Hj'].
-      2: destruct (HTVall j) as [j' Hj'].
-      all: destruct (included_union siK F j') as [iota hiota].
-      all: specialize (Hj' phi v').
-      all: rewrite <-hvj' in Hj'. 
-      - specialize (Hj' H).
-        destruct Hj' as [b hb].
-        exists (iota b).
-        rewrite <-hiota.
-        apply hb.
-      - apply Hj'.
-        intros b.
-        specialize (H (iota b)).
-        rewrite <-hiota in H.
-        apply H.
-    Qed.
-
     Lemma TV_fixed_point_of_DDC_and_TV_directed:
     DDC K ->
     directedR (TV m0 (K:=K)) ->

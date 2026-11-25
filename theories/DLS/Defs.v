@@ -1,10 +1,10 @@
 From Stdlib Require Import Classes.Morphisms.
 Require Export FOL.Core.Models.
 
-(* The following states the existence of a formula: ⊥*)
+(** The following states the existence of the formula `⊥: form`*)
 Existing Instance falsity_on.
 
-(* Size comparisons of types *)
+(** Size comparisons of types *)
 Section Retracts.
 
   Class retract (A B: Type): Type := {
@@ -20,7 +20,7 @@ Section Retracts.
 End Retracts.
 Notation "A ≤R B" := (retract A B) (at level 80).
 
-(* Properties of relations *)
+(** Properties of relations *)
 Section Properties.
 
   Definition totalR {X Y: Type} (R: X -> Y -> Prop) :=
