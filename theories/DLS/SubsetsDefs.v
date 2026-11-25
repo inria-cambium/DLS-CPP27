@@ -15,7 +15,7 @@ Section Defs.
   Abbreviation p := (X_add_X_retr_X_of_si_X siK).
   Abbreviation z := (X_mul_X_retr_X_of_si_X siK).
 
-  Definition smallsubset: Type :=  K -> X.
+  Definition smallsubset: Type := K -> X.
 
   Definition included: smallsubset -> smallsubset -> Prop :=
   fun A B => exists j: K -> K, feq A (fun a => (B (j a))).

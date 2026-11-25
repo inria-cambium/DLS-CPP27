@@ -194,20 +194,51 @@ Section Forward.
         apply H.
     Qed.
 
-    Lemma DLS_of_DDC_and_TV_total:
+    Lemma TV_fixed_point_of_DDC_and_TV_directed:
     DDC K ->
-    totalR (TV m0 (K:=K)) ->
-    DLS_on K M.
+    directedR (TV m0 (K:=K)) ->
+    exists A: smallsubset M K, TV m0 A A.
     Proof.
-      intros ddc H.
-      apply (directed_of_total_of_rightmono siK (TV_rightmono K)) in H.
-      unfold DLS_on.
-      destruct (TV_fixpoint_of_directed_family (ddc (smallsubset M K) (fun _ => m0) (TV m0) H)) as [A HA].
-      exists (Build_model (interp_on_closure A)).
-      split.
-      - exists (closure A).
-        exact (elemsubm_of_TV_fixpoint _ _ HA).
-      - exact (inhabits _).
+      intros ddc h.
+      destruct (ddc (smallsubset M K) (fun _ => m0) (TV m0) h) as [F HF].
+      assert (Hincl: directedR (fun k1 k2 => included (F k1) (F k2))).
+      {
+        intros k1 k2. destruct (HF k1 k2) as [k0 [[H1 _] [H2 _]]].
+        exists k0.
+        split; assumption.
+      }
+      assert (HTVex: totalR (fun k1 k2 => TVex m0 (F k1) (F k2))).
+      {
+        intros k1. destruct (HF k1 k1) as [k0 [[_ [H1 _]] _]].
+        exists k0.
+        assumption.
+      }
+      assert (HTVall: totalR (fun k1 k2 => TVall m0 (F k1) (F k2))).
+      {
+        intros k1. destruct (HF k1 k1) as [k0 [[_ [_ H1]] _]].
+        exists k0.
+        assumption.
+      }
+      exists (union siK F).
+      repeat split.
+      1: reflexivity.
+      all: intros phi v H.
+      all: destruct (uniform_clos_vec siK Hincl (existT _ _ v)) as [j [v' hvj']].
+      1: destruct (HTVex j) as [j' Hj'].
+      2: destruct (HTVall j) as [j' Hj'].
+      all: destruct (included_union siK F j') as [iota hiota].
+      all: specialize (Hj' phi v').
+      all: rewrite <-hvj' in Hj'. 
+      - specialize (Hj' H).
+        destruct Hj' as [b hb].
+        exists (iota b).
+        rewrite <-hiota.
+        apply hb.
+      - apply Hj'.
+        intros b.
+        specialize (H (iota b)).
+        rewrite <-hiota in H.
+        apply H.
     Qed.
 
     Definition Rex (A: smallsubset M K):
@@ -333,8 +364,16 @@ Section Forward.
   DLS K.
   Proof.
     intros bac ddc bdp bep M m0.
-    refine (DLS_of_DDC_and_TV_total (m0:=m0) ddc _).
-    refine (TV_total_of_BAC_BEP_BDP bac bep bdp).
+    destruct (TV_fixed_point_of_DDC_and_TV_directed (M:=M) (m0:=m0) ddc) as [A HA].
+    {
+      apply (directed_of_total_of_rightmono siK (TV_rightmono _)).
+      apply (TV_total_of_BAC_BEP_BDP bac bep bdp).
+    }
+    exists (Build_model (interp_on_closure A)).
+    split.
+    - exists (closure A).
+      exact (elemsubm_of_TV_fixpoint m0 _ HA).
+    - exact (inhabits _).
   Qed.
 
 End Forward.
