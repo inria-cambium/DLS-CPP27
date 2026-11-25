@@ -121,8 +121,6 @@ Section Closure.
   Context {s_P: preds_signature}.
   Context {M: model} (m0: M).
   Context {K: Type}.
-  Context (siK: strongInf K).
-  Abbreviation k0 := (X_of_si_X siK).
 
   Fixpoint closure (A: smallsubset M K) (u: termK K) :=
     match u with
@@ -155,6 +153,9 @@ Section Closure.
       + reflexivity.
       + simpl. f_equal; assumption.
   Qed.
+
+  Context (siK: strongInf K).
+  Abbreviation k0 := (X_of_si_X siK).
 
   Equations size (u: termK K): nat :=
   size (varK a) := 1 ;

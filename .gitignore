@@ -36,5 +36,3 @@ nra.cache
 native_compute_profile_*.data
 
 _opam
-
-website/*

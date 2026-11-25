@@ -19,7 +19,9 @@ Proof.
 Qed.
 
 Section ElementaryOperations.
-  (* These definitions are voluntarily ended with `Qed` rather than `Defined`. *)
+(** These instances are voluntarily ended with `Qed` rather than `Defined`:
+the values taken by the functions of a retract are never important.
+What may be important in a  *)
 
   #[global] Instance id_retr A: A ≤R A.
   Proof.

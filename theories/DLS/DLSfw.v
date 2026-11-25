@@ -14,9 +14,6 @@ Section TarskiVaught.
     Context {M: model} (m0: M).
 
     Context {K: Type}.
-    Context (siK: strongInf K).
-    Context (r: s_f + s_P ≤R K).
-    Abbreviation k0 := (X_of_si_X siK).
 
     Definition TVall {fff: falsity_flag} (A B: smallsubset M K) :=
     forall (phi: form) (va: vec (termK K) (form_max_var (∀ phi))),
@@ -139,14 +136,12 @@ End TarskiVaught.
 
 Section Forward.
 
-  (* Context {fff: falsity_flag}. *)
   Existing Instance falsity_on.
   Context {s_f: funcs_signature}.
   Context {s_P: preds_signature}.
 
   Context {K: Type}.
   Context (Rsf: s_f + s_P ≤R K).
-  Context (RsP: s_P ≤R K).
   Context (siK: strongInf K).
   Abbreviation k0 := (X_of_si_X siK).
 
